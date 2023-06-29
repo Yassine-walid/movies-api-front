@@ -2,6 +2,10 @@ import { dark } from '@mui/material/styles/createPalette';
 import './App.css';
 import api from './api/axiosConfig'
 import { useEffect,useState } from "react";
+import { Routes,Route } from "react-router-dom";
+import Layout from './Components/Layout';
+import Home from './Home/Home';
+import Header from './Components/Header/Header';
 
 function App() {
   
@@ -12,7 +16,6 @@ function App() {
     try {
 
       const response = await api.get("/movies")
-      console.log(response.data)
       setMovies(response.data)
 
     } catch (error) {
@@ -25,7 +28,12 @@ function App() {
   },[])
   return (
     <div className="App">
-      
+      <Header/>
+      <Routes>
+        <Route path='/' element={<Layout/>}>
+          <Route path='/' element={<Home movies={movies}/>}></Route>
+        </Route>
+      </Routes>
     </div>
   );
 }
